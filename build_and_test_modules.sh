@@ -4,7 +4,7 @@
 parent_project="TRAIN-TICKET-MICROSERVICE-APPLICATION-PROJECT"
 
 # List of module directories
-modules=("tes-price-servic" "ts-admin-order-service" "ts-admin-route-service")
+modules=("ts-price-service" "ts-admin-order-service" "ts-admin-route-service")
 
 # Build and test each module
 for module in "${modules[@]}"; do
@@ -16,7 +16,7 @@ for module in "${modules[@]}"; do
         cd "$module_dir" || exit 1
         
         mvn --batch-mode --update-snapshots verify
-         mkdir staging && cp target/*.jar staging
+        mkdir staging && cp target/*.jar staging
         
         cd ..
     else
