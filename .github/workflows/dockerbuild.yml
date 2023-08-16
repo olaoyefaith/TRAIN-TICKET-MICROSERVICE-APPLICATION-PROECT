@@ -80,7 +80,7 @@ jobs:
       - name: Read modules from file
         id: modules
         run: |
-          echo "::set-env name=modules::$(cat modules.yml | yq r - 'modules')"
+          echo "::set-env name=modules::$(cat modules.yml | yq r - 'matrix.module')"
 
       - name: Set up Java
         uses: actions/setup-java@v2
