@@ -3,14 +3,14 @@ name: Java Microservices CI
 on:
   push:
     branches:
-      - main
+      - ci-build-containerization
   pull_request:
 
 jobs:
   build:
     strategy:
       matrix:
-        module: [module1, module2, ...] # Add more modules
+        module: [ts-admin-basic-info-service, ts-admin-order-service, ts-admin-route-service] # Add more modules
       fail-fast: false
       max-parallel: 3
 
@@ -20,15 +20,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: enter modules
+        run: cd ${{ matrix.module }}
+
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
           java-version: '11' # Use your desired Java version
 
       - name: Build and test
-        run: |
-          cd ${{ matrix.module }}
-         mvn clean package -Dmaven.test.skip=true
+        run: mvn clean package -Dmaven.test.skip=true
       # - name: Build and push Docker image
       #   env:
       #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
