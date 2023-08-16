@@ -1,86 +1,25 @@
-# name: Java Microservices CI
-
-# on:
-#   push:
-#     branches:
-#       - ci-build-containerization
-#   pull_request:
-
-# jobs:
-#   build:
-#     strategy:
-#       matrix:
-#         module: [ts-admin-basic-info-service, ts-admin-order-service, ts-admin-route-service ,] # Add more modules
-#       fail-fast: false
-#       max-parallel: 3
-
-
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Set up Java
-#         uses: actions/setup-java@v2
-#         with:
-#           distribution: 'adopt'
-#           java-version: '11'
-
-#       - name: Cache local Maven repository
-#         uses: actions/cache@v2
-#         with:
-#           path: ~/.m2/repository
-#           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#           restore-keys: |
-#             ${{ runner.os }}-maven-
-
-#       - name: Build packages
-#         run: mvn clean package -Dmaven.test.skip=true
-                   
-#       - name: Set up QEMU
-#         uses: docker/setup-qemu-action@v2
-      
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v2
-      
-#       - name: Login to Docker Hub
-#         uses: docker/login-action@v2
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-#       - uses: satackey/action-docker-layer-caching@v0.0.11
-#         continue-on-error: true
-
-#       - name: Build and push
-#         uses: docker/build-push-action@v4
-#         with:
-#           context: ./${{ matrix.module}}
-#           push: true
-         
-#           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}
-
 name: Java Microservices CI
 
 on:
   push:
     branches:
       - ci-build-containerization
-  workflow_dispatch:
+  pull_request:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        module: [ts-admin-basic-info-service,ts-admin-order-service,ts-admin-route-service,ts-admin-travel-service,ts-admin-user-service,ts-assurance-service,ts-auth-service,ts-avatar-service,ts-basic-service,ts-cancel-service,ts-config-service,ts-consign-price-service,ts-consign-service,ts-contacts-service,ts-delivery-service,ts-execute-service,ts-food-delivery-service,ts-food-service,ts-gateway-service,ts-inside-payment-service,ts-news-service,ts-notification-service,ts-notification-service,ts-order-other-service,ts-order-service] # Add more modules
+      fail-fast: false
+      max-parallel: 3
+
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Read modules from file
-        id: read_modules
-        run: |
-          echo "::set-env name=MODULES::$(cat modules.txt)"
 
       - name: Set up Java
         uses: actions/setup-java@v2
@@ -96,12 +35,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Build packages
+        run: mvn clean package -Dmaven.test.skip=true
+                   
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
+      
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -112,8 +54,9 @@ jobs:
         continue-on-error: true
 
       - name: Build and push
-        run: |
-          for module in $MODULES; do
-            docker build -t $DOCKERHUB_USERNAME/$module:${{ github.run_number }} ./$module
-            docker push $DOCKERHUB_USERNAME/$module:${{ github.run_number }}
-          done
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ matrix.module}}
+          push: true
+         
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}
