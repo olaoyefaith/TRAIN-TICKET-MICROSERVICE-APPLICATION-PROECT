@@ -1,4 +1,4 @@
-FROM java:8-jre
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
