@@ -1,19 +1,40 @@
----
-name: Java CI
+name: Java Microservices CI
+
 on:
-  - push
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build:
+    strategy:
+      matrix:
+        module: [module1, module2, ...] # Add more modules
+      fail-fast: false
+      max-parallel: 3
+
     runs-on: ubuntu-latest
-steps:
-  - uses: actions/checkout@v3
-  - run: chmod +x build_and_test_modules.sh
-  - uses: actions/setup-java@v3
-    with:
-      java-version: "17"
-      distribution: temurin
-  - run: ./build_and_test_modules.sh
-  - uses: actions/upload-artifact@v3
-    with:
-      name: Package
-      path: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11' # Use your desired Java version
+
+      - name: Build and test
+        run: |
+          cd ${{ matrix.module }}
+         mvn clean package -Dmaven.test.skip=true
+      # - name: Build and push Docker image
+      #   env:
+      #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     echo "Building Docker image for ${{ matrix.module}}"
+      #     docker build -t yourusername/${{ matrix.module }}:${{ github.run_number }} .
+      #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      #     docker push yourusername/${{ matrix.module }}:${{ github.run_number }}
