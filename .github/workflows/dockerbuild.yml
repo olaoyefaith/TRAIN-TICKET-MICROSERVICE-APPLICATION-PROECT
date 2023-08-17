@@ -68,3 +68,4 @@ jobs:
           name: ${{ matrix.module }}
           args: |
             echo "Hello World"
+            uname -a
