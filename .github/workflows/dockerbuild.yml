@@ -61,10 +61,10 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}
 
             
-      - name: Run ubuntu from dockerhub
+      - name: Run
         uses: tj-actions/docker-run@v2
         with:
-         image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }} # OR gcr.io/cloud-builders/gradle
-         name: test images
-         args: |
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}
+          name: ${{ matrix.module }}
+          args: |
             echo "Hello World"
