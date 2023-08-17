@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./${{ matrix.module}}
-          push: false
+          push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}
 
             
