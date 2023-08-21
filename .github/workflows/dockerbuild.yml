@@ -2,9 +2,10 @@ name: Java Microservices CI
 
 on:
   push:
-    branches:
-      - ci-build-containerization
+    branches: [ "main" ]
+
   pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
