@@ -3,10 +3,8 @@
 .terraform/
 *.tfstate
 *.tfstate.*
+*tfvars
 *.lock.*
-
-
-
 *terraform/providers/registry.terraform.io/hashicorp/azurerm/3.0.0/windows_amd64/terraform-provider-azurerm_v3.0.0_x5.exe
 *terraform/providers/registry.terraform.io/hashicorp/azuread/2.41.0/windows_amd64/terraform-provider-azuread_v2.41.0_x5.exe
 *terraform/providers/registry.terraform.io/hashicorp/azurerm/3.7.0/windows_amd64/terraform-provider-azurerm_v3.7.0_x5.exe
