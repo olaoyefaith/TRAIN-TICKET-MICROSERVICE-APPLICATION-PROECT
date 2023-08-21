@@ -1,6 +1,0 @@
-resourcegroup1= "test-faith-rg"
-storageaccountname = "test-faith-sn"
-containername = "statefile"
-location= "West Europe"
-service_principal_name = "test-faith-spn"
-keyvault_name          = "test-faith-kv"
