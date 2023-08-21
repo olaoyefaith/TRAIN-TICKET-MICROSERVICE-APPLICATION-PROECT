@@ -15,7 +15,7 @@ terraform {
     storage_account_name  = var.storageaccountname
     container_name        = var.containername
     key                   = "terraform.tfstate"
-    access_key            = "<your-storage-access-key>"
+ 
   }
 }
 
