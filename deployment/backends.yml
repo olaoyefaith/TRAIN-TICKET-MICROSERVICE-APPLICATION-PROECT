@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ts-admin-basic-info-service
-        image: olaoyefaith/ts-admin-basic-info-service:30
+        image: olaoyefaith/ts-basic-service:20230913160001
         imagePullPolicy: Always
         ports:
         - containerPort: 18767
@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
       - name: ts-admin-order-service
-        image: 
+        image: olaoyefaith/ts-admin-order-service:20230913155440
         imagePullPolicy: Always
         ports:
         - containerPort: 16112
@@ -87,7 +87,7 @@ spec:
     spec:
       containers:
       - name: ts-admin-route-service
-        image: 
+        image: olaoyefaith/ts-admin-route-service:20230913155440
         imagePullPolicy: Always
         ports:
         - containerPort: 16113
@@ -122,7 +122,7 @@ spec:
     spec:
       containers:
       - name: ts-admin-travel-service
-        image: 
+        image: olaoyefaith/ts-admin-travel-service:20230913155704
         imagePullPolicy: Always
         ports:
         - containerPort: 16114
@@ -157,7 +157,7 @@ spec:
     spec:
       containers:
       - name: ts-admin-user-service
-        image: 
+        image: olaoyefaith/ts-admin-user-service:20230913155737
         imagePullPolicy: Always
         ports:
         - containerPort: 16115
@@ -192,7 +192,7 @@ spec:
     spec:
       containers:
       - name: ts-assurance-service
-        image: 
+        image: olaoyefaith/ts-assurance-service:20230913155737
         imagePullPolicy: Always
         ports:
         - containerPort: 18888
@@ -227,7 +227,7 @@ spec:
     spec:
       containers:
       - name: ts-basic-service
-        image: 
+        image: olaoyefaith/ts-basic-service:20230913160001
         imagePullPolicy: Always
         ports:
         - containerPort: 15680
@@ -262,7 +262,7 @@ spec:
     spec:
       containers:
       - name: ts-cancel-service
-        image: 
+        image: olaoyefaith/ts-cancel-service:20230913160016
         imagePullPolicy: Always
         ports:
         - containerPort: 18885
@@ -297,7 +297,7 @@ spec:
     spec:
       containers:
       - name: ts-config-service
-        image: 
+        image: olaoyefaith/ts-config-service:20230913160143
         imagePullPolicy: Always
         ports:
         - containerPort: 15679
@@ -332,7 +332,7 @@ spec:
     spec:
       containers:
       - name: ts-consign-price-service
-        image: 
+        image: olaoyefaith/ts-consign-price-service:20230913160228
         imagePullPolicy: Always
         ports:
         - containerPort: 16110
@@ -367,7 +367,7 @@ spec:
     spec:
       containers:
       - name: ts-consign-service
-        image: 
+        image: olaoyefaith/ts-consign-service:20230913160313
         imagePullPolicy: Always
         ports:
         - containerPort: 16111
@@ -402,7 +402,7 @@ spec:
     spec:
       containers:
       - name: ts-contacts-service
-        image: 
+        image: olaoyefaith/ts-contacts-service:20230913160352
         imagePullPolicy: Always
         ports:
         - containerPort: 12347
@@ -437,7 +437,7 @@ spec:
     spec:
       containers:
       - name: ts-execute-service
-        image: 
+        image: olaoyefaith/ts-execute-service:20230913160542
         imagePullPolicy: Always
         ports:
         - containerPort: 12386
@@ -507,7 +507,7 @@ spec:
     spec:
       containers:
       - name: ts-food-service
-        image: 
+        image: olaoyefaith/ts-food-service:20230913160654
         imagePullPolicy: Always
         ports:
         - containerPort: 18856
@@ -542,7 +542,7 @@ spec:
     spec:
       containers:
       - name: ts-inside-payment-service
-        image: 
+        image: olaoyefaith/ts-inside-payment-service:20230913160912
         imagePullPolicy: Always
         ports:
         - containerPort: 18673
@@ -577,7 +577,7 @@ spec:
     spec:
       containers:
       - name: ts-auth-service
-        image: 
+        image: olaoyefaith/ts-auth-service:20230913155937
         imagePullPolicy: Always
         ports:
         - containerPort: 12340
@@ -612,7 +612,7 @@ spec:
     spec:
       containers:
       - name: ts-news-service
-        image: 
+        image: olaoyefaith/ts-news-service:20230913160906
         imagePullPolicy: Always
         ports:
         - containerPort: 12862
@@ -647,7 +647,7 @@ spec:
     spec:
       containers:
       - name: ts-notification-service
-        image: 
+        image: olaoyefaith/ts-notification-service:20230913161128
         imagePullPolicy: Always
         ports:
         - containerPort: 17853
@@ -682,7 +682,7 @@ spec:
     spec:
       containers:
       - name: ts-order-other-service
-        image: 
+        image: olaoyefaith/ts-order-other-service:20230913161218
         imagePullPolicy: Always
         ports:
         - containerPort: 12032
@@ -717,7 +717,7 @@ spec:
     spec:
       containers:
       - name: ts-order-service
-        image: 
+        image: olaoyefaith/ts-order-service:20230913161337
         imagePullPolicy: Always
         ports:
         - containerPort: 12031
@@ -752,7 +752,7 @@ spec:
     spec:
       containers:
       - name: ts-payment-service
-        image: 
+        image: olaoyefaith/ts-inside-payment-service:20230913160912
         imagePullPolicy: Always
         ports:
         - containerPort: 19001
