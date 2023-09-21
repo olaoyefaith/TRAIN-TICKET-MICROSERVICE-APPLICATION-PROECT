@@ -141,9 +141,9 @@
               --namespace ingress-nginx --create-namespace \
               --set controller.metrics.enabled=true --timeout 20m30s
               kubectl get services -n ingress-nginx
-          - name: Deploy YAML manifest into AKS
-            uses: Azure/k8s-deploy@v1
-            with:
-              manifests: |
-                kubernetesmanifest/kubedeploy.yml
+          # - name: Deploy YAML manifest into AKS
+          #   uses: Azure/k8s-deploy@v1
+          #   with:
+          #     manifests: |
+          #       kubernetesmanifest/kubedeploy.yml
   
