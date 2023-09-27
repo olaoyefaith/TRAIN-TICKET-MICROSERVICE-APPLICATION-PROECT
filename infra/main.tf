@@ -30,45 +30,45 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     Environment = "Development"
   }
 }
-resource "azurerm_virtual_network" "example" {
-  name                = "example-vnet"
-  address_space       = ["10.7.29.0/29"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
+# resource "azurerm_virtual_network" "example" {
+#   name                = "example-vnet"
+#   address_space       = ["10.7.29.0/29"]
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+# }
 
-resource "azurerm_subnet" "internal" {
-  name                 = "internal"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.example.name
-  address_prefixes     = ["10.7.29.0/29"]
-  service_endpoints    = ["Microsoft.Sql"]
-}
+# resource "azurerm_subnet" "internal" {
+#   name                 = "internal"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.example.name
+#   address_prefixes     = ["10.7.29.0/29"]
+#   service_endpoints    = ["Microsoft.Sql"]
+# }
 
-resource "azurerm_postgresql_server" "example" {
-  name                = "postgresql-server-7q000"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+# resource "azurerm_postgresql_server" "example" {
+#   name                = "postgresql-server-7q000"
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
 
-  sku_name = "GP_Gen5_2"
+#   sku_name = "GP_Gen5_2"
 
-  storage_mb            = 5120
-  backup_retention_days = 7
+#   storage_mb            = 5120
+#   backup_retention_days = 7
 
 
-  administrator_login          = var.administrator_login
-  administrator_login_password = var.administrator_login_password
-  version                      = "9.5"
-  ssl_enforcement_enabled      = true
-}
+#   administrator_login          = var.administrator_login
+#   administrator_login_password = var.administrator_login_password
+#   version                      = "9.5"
+#   ssl_enforcement_enabled      = true
+# }
 
-resource "azurerm_postgresql_virtual_network_rule" "example" {
-  name                                 = "postgresql-vnet-rule"
-  resource_group_name                  = azurerm_resource_group.rg.name
-  server_name                          = azurerm_postgresql_server.example.name
-  subnet_id                            = azurerm_subnet.internal.id
-  ignore_missing_vnet_service_endpoint = true
-}
+# resource "azurerm_postgresql_virtual_network_rule" "example" {
+#   name                                 = "postgresql-vnet-rule"
+#   resource_group_name                  = azurerm_resource_group.rg.name
+#   server_name                          = azurerm_postgresql_server.example.name
+#   subnet_id                            = azurerm_subnet.internal.id
+#   ignore_missing_vnet_service_endpoint = true
+# }
 
 
 # module "postgresql" {

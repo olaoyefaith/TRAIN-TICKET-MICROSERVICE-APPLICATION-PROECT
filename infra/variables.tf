@@ -52,15 +52,15 @@ variable "location" {
 }
 
 
-variable "administrator_login" {
-  description = "Administrator username for PostgreSQL"
-  type        = string
-}
+# variable "administrator_login" {
+#   description = "Administrator username for PostgreSQL"
+#   type        = string
+# }
 
-variable "administrator_login_password" {
-  description = "Administrator password for PostgreSQL"
-  type        = string
-}
+# variable "administrator_login_password" {
+#   description = "Administrator password for PostgreSQL"
+#   type        = string
+# }
            
 
 # variable "pg_server_name" {
