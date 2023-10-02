@@ -7,8 +7,10 @@ cluster_name        = "__AKS_NAME__"
 # storage_name       = "__STORAGE_NAME__"
 aks_service_principal_client_id     = "__CLIENT_ID__"
 aks_service_principal_client_secret = "__CLIENT_SECRET__"
-
-
+SUBSCRIPTION_ID   = "__SUBSCRIPTION_ID__"
+SP_CLIENT_ID     = "__CLIENT_ID__"
+SP_CLIENT_SECRET = "__CLIENT_SECRET__"
+SP_TENANT_ID     = "__TENANT_ID__"
  kubernetes_version = "1.26.3"
 # administrator_login_password="__ADMINISTRATOR_LOGIN_PASSWORD__"
 # administrator_login="__ADMINISTRATOR_LOGIN__"
