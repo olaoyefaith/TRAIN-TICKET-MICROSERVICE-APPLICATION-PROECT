@@ -3,23 +3,6 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-
-data "azuread_client_config" "current" {}
-
-resource "azuread_application" "example" {
-  display_name = "example"
-  owners       = [data.azuread_client_config.current.object_id]
-}
-
-resource "azuread_service_principal" "example" {
-  application_id               = azuread_application.example.application_id
-  app_role_assignment_required = false
-  owners                       = [data.azuread_client_config.current.object_id]
-  
-  }
-
-
-
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = var.cluster_name
   location            = azurerm_resource_group.rg.location
@@ -42,10 +25,17 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_policy = "calico"
   }
 
+  service_principal {
+    client_id     = var.aks_service_principal_client_id
+    client_secret = var.aks_service_principal_client_secret
+  }
+
   tags = {
     Environment = "Development"
   }
 }
+
+
 # resource "azurerm_virtual_network" "example" {
 #   name                = "example-vnet"
 #   address_space       = ["10.7.29.0/29"]

@@ -14,7 +14,8 @@ env:
   TF_STATE_CONTAINER_NAME: tfstate
   TF_STATE_FILE_NAME: tfstate
   TF_STATE_ACCESS_KEY: ""
-  client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
   subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   tenant-id: ${{ secrets.AZURE_TENANT_ID }}
   AKS_RESOURCE_GROUP: aks-102-rg
@@ -67,7 +68,7 @@ jobs:
         with:
           files: infra/terraform.tfvars
           replacements: |
-            __AKS_RESOURCE_GROUP__=${{ env.AKS_RESOURCE_GROUP}},__AKS_NAME__=${{ env.AKS_NAME}}
+            __AKS_RESOURCE_GROUP__=${{ env.AKS_RESOURCE_GROUP}},__AKS_NAME__=${{ env.AKS_NAME}},__CLIENT_ID__=${{ secrets.AZURE_CLIENT_ID }},__CLIENT_SECRET__= ${{ secrets.AZURE_CLIENT_SECRET }}
             
    # __ADMINISTRATOR_LOGIN__=${{ env.ADMINISTRATOR_LOGIN }},__ADMINISTRATOR_LOGIN_PASSWORD__=${{ env.ADMINISTRATOR_LOGIN_PASSWORD }}
 

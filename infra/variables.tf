@@ -51,6 +51,17 @@ variable "location" {
   default     = "westeurope"
 }
 
+variable "aks_service_principal_client_id" {
+  description = "Client ID of the Azure service principal for AKS"
+  type        = string
+}
+
+variable "aks_service_principal_client_secret" {
+  description = "Client Secret of the Azure service principal for AKS"
+  type        = string
+}
+
+
 
 # variable "administrator_login" {
 #   description = "Administrator username for PostgreSQL"
