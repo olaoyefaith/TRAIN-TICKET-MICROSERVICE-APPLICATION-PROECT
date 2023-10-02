@@ -69,7 +69,7 @@ jobs:
           replacements: |
             __AKS_RESOURCE_GROUP__=${{ env.AKS_RESOURCE_GROUP}},__AKS_NAME__=${{ env.AKS_NAME}}
             
-            # __ADMINISTRATOR_LOGIN__=${{ env.ADMINISTRATOR_LOGIN}},__ADMINISTRATOR_LOGIN_PASSWORD__=${{ env.ADMINISTRATOR_LOGIN_PASSWORD }}
+   # __ADMINISTRATOR_LOGIN__=${{ env.ADMINISTRATOR_LOGIN }},__ADMINISTRATOR_LOGIN_PASSWORD__=${{ env.ADMINISTRATOR_LOGIN_PASSWORD }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
