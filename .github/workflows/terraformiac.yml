@@ -14,10 +14,10 @@ env:
   TF_STATE_CONTAINER_NAME: tfstate
   TF_STATE_FILE_NAME: tfstate
   TF_STATE_ACCESS_KEY: ""
-  CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AKS_RESOURCE_GROUP: aks-102-rg
   AKS_NAME: aks-102
   SQL_INSTANCE_NAME: sqlforaks102
@@ -89,6 +89,11 @@ jobs:
           -backend-config="container_name=$TF_STATE_CONTAINER_NAME"
           -backend-config="access_key=$TF_STATE_ACCESS_KEY" 
           -backend-config="key=$TF_STATE_FILE_NAME"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
         working-directory: infra/
 
       - name: Terraform Validate
@@ -102,6 +107,11 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve
         working-directory: infra
+        env:
+         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+         ARM_USE_OIDC: true
 
   deploy-app-aks:
     name: Deploy app into Kubernetes
