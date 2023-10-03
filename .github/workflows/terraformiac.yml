@@ -109,15 +109,23 @@ jobs:
         run: terraform plan -var-file="terraform.tfvars"
         working-directory: infra
         continue-on-error: true
-      - name: Terraform apply
-        run: terraform apply -auto-approve
+      # - name: Terraform apply
+      #   run: terraform apply -auto-approve
+      #   working-directory: infra
+      #   env:
+      #    ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      #    ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #    ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      #    ARM_USE_OIDC: true
+      - name: Terraform destroy
+        run: terraform destroy -auto-approve
         working-directory: infra
         env:
          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
          ARM_USE_OIDC: true
-
+ 
   deploy-app-aks:
     name: Deploy app into Kubernetes
     runs-on: ubuntu-latest
@@ -140,7 +148,7 @@ jobs:
         uses: azure/use-kubelogin@v1
         with:
           kubelogin-version: 'v0.0.26'
-          
+
       - name: Connect to AKS
         uses: Azure/aks-set-context@v3
         with:
