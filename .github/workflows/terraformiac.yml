@@ -134,6 +134,13 @@ jobs:
          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       
+      - uses: azure/setup-kubectl@v3
+        name: Setup kubectl
+      - name: Setup kubelogin
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.26'
+          
       - name: Connect to AKS
         uses: Azure/aks-set-context@v3
         with:
