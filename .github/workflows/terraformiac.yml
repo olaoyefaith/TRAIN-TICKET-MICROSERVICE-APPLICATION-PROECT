@@ -2,7 +2,8 @@ name: infrastructure as code deployment
 
 on:
   push:
-    branches: create-infrastructure
+    branches: 
+      - '*'
   pull_request:
     branches: none
   workflow_dispatch:
@@ -109,22 +110,22 @@ jobs:
         run: terraform plan -var-file="terraform.tfvars"
         working-directory: infra
         continue-on-error: true
-      # - name: Terraform apply
-      #   run: terraform apply -auto-approve
-      #   working-directory: infra
-      #   env:
-      #    ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      #    ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #    ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      #    ARM_USE_OIDC: true
-      - name: Terraform destroy
-        run: terraform destroy -auto-approve
+      - name: Terraform apply
+        run: terraform apply -auto-approve
         working-directory: infra
         env:
          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
          ARM_USE_OIDC: true
+      # - name: Terraform destroy
+      #   run: terraform destroy -auto-approve
+      #   working-directory: infra
+      #   env:
+      #    ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      #    ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #    ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      #    ARM_USE_OIDC: true
  
   deploy-app-aks:
     name: Deploy app into Kubernetes
@@ -187,3 +188,12 @@ jobs:
             --namespace ingress-nginx --create-namespace \
             --set controller.metrics.enabled=true --timeout 20m30s
           kubectl get services -n ingress-nginx
+
+      - name: Deploy Yaml manifest for train application
+        working-directory: ./deployment
+        run: |
+            kubectl apply -f database.yml
+            kubectl apply -f backends.yml
+            kubectl apply -f frontend.yml
+            kubectl apply -f ingress.yml
+            
