@@ -1,8 +1,15 @@
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trainstation
+  
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: azure-disk
+  namespace: trainstation
 provisioner: kubernetes.io/azure-disk
 parameters:
   storageaccounttype: Standard_LRS
@@ -12,6 +19,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
+  namespace: trainstation
 spec:
   storageClassName: azure-disk
   accessModes:
@@ -26,6 +34,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongo-pvc
+  namespace: trainstation
 spec:
   storageClassName: azure-disk
   accessModes:
@@ -38,6 +47,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-user-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -58,6 +68,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -71,6 +84,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-user-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -82,6 +96,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-mysql
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -105,6 +120,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
@@ -117,6 +135,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-auth-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -137,6 +156,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -150,6 +172,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -170,6 +193,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi 
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -183,6 +209,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -203,6 +230,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -216,6 +246,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -236,6 +267,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -249,6 +283,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -269,6 +304,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -282,6 +320,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -302,6 +341,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -315,6 +357,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -335,6 +378,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -348,6 +394,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -368,6 +415,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -381,6 +431,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -401,6 +452,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -415,6 +469,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -435,6 +490,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -448,6 +506,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -468,6 +527,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -481,6 +543,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -501,6 +564,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -514,6 +580,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -534,6 +601,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -547,6 +617,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -567,6 +638,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -580,6 +654,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -600,6 +675,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -614,6 +692,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -634,6 +713,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
       volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -647,6 +729,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-map-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -667,6 +750,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -680,6 +766,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -700,6 +787,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -713,6 +803,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -733,6 +824,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -746,6 +840,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-mongo
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -766,6 +861,9 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
@@ -778,6 +876,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-user-mongo 
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -789,6 +888,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-auth-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -800,6 +900,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-route-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -812,6 +913,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-contacts-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -824,6 +926,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-order-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -836,6 +939,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-order-other-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -848,6 +952,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-config-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -860,6 +965,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-station-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -872,6 +978,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-train-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -884,6 +991,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-travel-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -896,6 +1004,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-travel2-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -908,6 +1017,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-price-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -920,6 +1030,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-security-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -932,6 +1043,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-inside-payment-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -944,6 +1056,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-payment-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -956,6 +1069,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-assurance-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -968,6 +1082,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-ticket-office-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -980,6 +1095,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-voucher-mysql
+  namespace: trainstation
 spec:
   ports:
     - port: 3306
@@ -992,6 +1108,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-food-map-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -1004,6 +1121,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-consign-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -1016,6 +1134,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-consign-price-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017
@@ -1028,6 +1147,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-food-mongo
+  namespace: trainstation
 spec:
   ports:
     - port: 27017

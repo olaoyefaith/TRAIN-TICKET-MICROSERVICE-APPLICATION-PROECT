@@ -1,9 +1,14 @@
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trainstation
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-basic-info-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -40,6 +45,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-order-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -75,6 +81,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-route-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -110,6 +117,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-travel-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -145,6 +153,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-user-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -180,6 +189,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -215,6 +225,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-basic-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -250,6 +261,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-cancel-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -285,6 +297,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -320,6 +333,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -355,6 +369,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -390,6 +405,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -425,6 +441,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-execute-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -460,6 +477,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-map-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -495,6 +513,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -530,6 +549,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -565,6 +585,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-auth-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -600,6 +621,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-news-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -635,6 +657,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-notification-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -670,6 +693,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -705,6 +729,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -740,6 +765,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -775,6 +801,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-other-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -810,6 +837,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -845,6 +873,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -880,6 +909,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-rebook-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -915,6 +945,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-plan-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -950,6 +981,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -985,6 +1017,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-seat-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1020,6 +1053,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1055,6 +1089,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-user-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1090,6 +1125,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1125,6 +1161,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1160,6 +1197,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticketinfo-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1195,6 +1233,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1230,6 +1269,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1265,6 +1305,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-plan-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1300,6 +1341,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1335,6 +1377,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-verification-code-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1370,6 +1413,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-service
+  namespace: trainstation
 spec:
   selector:
     matchLabels:
@@ -1405,6 +1449,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-admin-basic-info-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1418,6 +1463,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-admin-order-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1431,6 +1477,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-admin-route-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1443,7 +1490,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-admin-travel-service
+  name: ts-admin-travel-
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1457,6 +1505,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-admin-user-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1470,6 +1519,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-assurance-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1483,6 +1533,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-basic-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1496,6 +1547,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-cancel-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1509,6 +1561,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-config-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1522,6 +1575,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-consign-price-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1535,6 +1589,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-consign-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1548,6 +1603,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-contacts-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1561,6 +1617,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-execute-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1574,6 +1631,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-food-map-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1587,6 +1645,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-food-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1600,6 +1659,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-inside-payment-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1613,6 +1673,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-user-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1626,6 +1687,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-notification-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1639,6 +1701,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-news-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1652,6 +1715,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-order-other-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1665,6 +1729,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-order-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1678,6 +1743,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-payment-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1691,6 +1757,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-preserve-other-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1704,6 +1771,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-preserve-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1717,6 +1785,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-price-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1730,6 +1799,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-rebook-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1743,6 +1813,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-route-plan-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1756,6 +1827,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-route-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1769,6 +1841,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-seat-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1782,6 +1855,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-security-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1795,6 +1869,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-auth-service
+  namespace: trainstation
 spec:
   type: LoadBalancer
   ports:
@@ -1809,6 +1884,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-station-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1822,6 +1898,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-ticket-office-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1835,6 +1912,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-ticketinfo-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1848,6 +1926,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-train-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1861,6 +1940,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-travel2-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1874,6 +1954,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-travel-plan-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1887,6 +1968,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-travel-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1901,6 +1983,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-verification-code-service
+  namespace: trainstation
 spec:
   ports:
     - name: http
@@ -1915,6 +1998,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ts-voucher-service
+  namespace: trainstation
 spec:
   ports:
     - name: http

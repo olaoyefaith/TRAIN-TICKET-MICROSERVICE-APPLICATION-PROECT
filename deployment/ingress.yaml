@@ -1,0 +1,61 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: ts-ui-dashboard
+  namespace: trainstation
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: olaoyefaith.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ts-ui-dashboard
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus-monitoring-ingress
+  namespace: monitoring
+  annotations:
+     kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "prometheus.olaoyefaith.me"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-monitoring-ingress
+  namespace: monitoring
+  annotations:
+     kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "grafana.olaoyefaith.me"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
