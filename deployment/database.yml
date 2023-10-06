@@ -71,13 +71,18 @@ spec:
           limits:
             memory: "500Mi"
             cpu: "200m"
-          volumeMounts:
-          - name: mongo-storage
-            mountPath: /data/db
-        volumes:
+        volumeMounts:
         - name: mongo-storage
-          persistentVolumeClaim:
-            claimName: mongo-pvc
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+
 ---
 # Define services for MongoDB instances
 apiVersion: v1
