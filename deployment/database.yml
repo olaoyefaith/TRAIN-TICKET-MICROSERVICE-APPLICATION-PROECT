@@ -44,7 +44,7 @@ spec:
       storage: 1Gi
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: ts-user-mongo
   namespace: trainstation
