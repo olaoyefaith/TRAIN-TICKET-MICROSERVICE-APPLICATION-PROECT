@@ -1,4 +1,4 @@
-FROM openjdk:8u342-jre-buster
+FROM mdsol/java11-jre:latest
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
