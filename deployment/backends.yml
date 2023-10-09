@@ -697,7 +697,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: ts-orgder-other-service
+      app: ts-order-other-service
   replicas: 1
   template:
     metadata:
@@ -1490,7 +1490,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-admin-travel-
+  name: ts-admin-travel-service
   namespace: trainstation
 spec:
   ports:
