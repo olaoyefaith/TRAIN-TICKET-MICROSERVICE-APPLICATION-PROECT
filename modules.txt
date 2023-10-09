@@ -1,3 +1,0 @@
-ts-admin-basic-info-service
-ts-admin-order-service
-ts-admin-route-service
