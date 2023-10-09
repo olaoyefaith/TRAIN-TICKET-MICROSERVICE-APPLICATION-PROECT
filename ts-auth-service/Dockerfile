@@ -1,5 +1,4 @@
-FROM adoptopenjdk:11-jdk-hotspot
-
+FROM mdsol/java11-jre:latest
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
 ADD ./target/ts-auth-service-1.0.jar /app/

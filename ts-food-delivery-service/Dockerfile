@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jdk-hotspot
+FROM mdsol/java11-jre:latest
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
