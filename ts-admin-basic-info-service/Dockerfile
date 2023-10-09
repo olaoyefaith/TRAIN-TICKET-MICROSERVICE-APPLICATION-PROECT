@@ -1,4 +1,4 @@
-FROM atiila/8-jre-alpine:latest
+FROM classmethod/openjdk-alpine-git:latest
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
