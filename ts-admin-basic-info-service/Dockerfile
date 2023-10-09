@@ -1,4 +1,4 @@
-FROM docker pull openjdk:8u342-jre-buster
+FROM openjdk:8u342-jre-buster
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
