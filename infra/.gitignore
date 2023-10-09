@@ -1,0 +1,6 @@
+*.lock.*
+*.local.*
+*.tfstate.*
+*.tfstate
+*.plan
+*.terraform
