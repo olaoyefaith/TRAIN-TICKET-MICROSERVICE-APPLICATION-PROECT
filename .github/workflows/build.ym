@@ -1,0 +1,47 @@
+name: Java Microservices CI
+
+on:
+  push:
+    branches:
+      # - ci-build-containerization
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        module: [ts-admin-basic-info-service, ts-admin-order-service, ts-admin-route-service] # Add more modules
+      fail-fast: false
+      max-parallel: 3
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # - name: Build packages
+      #   run: mvn clean package -Dmaven.test.skip=true
+      # - name: Build and push Docker image
+      #   env:
+      #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     echo "Building Docker image for ${{ matrix.module}}"
+      #     docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ matrix.module }}:${{ github.run_number }} .
+      #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      #     docker push ${{ secrets.DOCKER_USERNAME }}/${{ matrix.module }}:${{ github.run_number }}

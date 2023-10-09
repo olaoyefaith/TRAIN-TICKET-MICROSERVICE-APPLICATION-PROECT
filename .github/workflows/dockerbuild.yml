@@ -1,0 +1,93 @@
+name: build docker images Microservices
+
+on:
+  push:
+    branches: none #[ "main" ]
+
+  pull_request:
+    branches: none # [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        module: [ts-admin-basic-info-service,ts-admin-order-service,ts-admin-route-service,ts-admin-travel-service,ts-admin-user-service,ts-assurance-service,ts-auth-service,ts-basic-service,ts-cancel-service,ts-config-service,ts-consign-price-service,ts-consign-service,ts-contacts-service,ts-delivery-service,ts-execute-service,ts-food-delivery-service,ts-food-service,ts-gateway-service,ts-inside-payment-service,ts-news-service,ts-notification-service,ts-notification-service,ts-order-other-service,ts-order-service] # Add more modules
+      fail-fast: false
+      max-parallel: 3
+
+
+    runs-on: ubuntu-latest
+   
+
+    steps:
+
+      - name: Set Date
+        id: set_date
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build packages
+        run: mvn clean package -Dmaven.test.skip=true
+                   
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ matrix.module}}
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ env.IMAGE_TAG }}
+     
+      # - name: Build Docker Image
+      #   working-directory: .
+     #    run:
+    #      docker build  --file ./src/Dockerfile --tag $DOCKER_REPOSITORY/$IMAGE_NAME:$GITHUB_RUN_NUMBER --build-arg=token=ZGEzNTQ5Y2QyNjAx --no-cache
+        
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        continue-on-error: true
+        with:
+         image-ref: 'docker.io/ ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ env.IMAGE_TAG }}'
+         format: 'table'
+         exit-code: '1'
+         ignore-unfixed: true
+         vuln-type: 'os,library'
+         severity: 'MEDIUM,HIGH,CRITICAL'
+            
+      - name: Run
+        uses: tj-actions/docker-run@v2
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.module }}:${{ env.IMAGE_TAG }}
+          name: ${{ matrix.module }}
+          args: |
+            echo "Hello World"
+            uname -a
