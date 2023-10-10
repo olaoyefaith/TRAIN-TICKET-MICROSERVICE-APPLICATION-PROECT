@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: ts-ui-dashboard
-        image: olaoyefaith/ts-ui-dashboard:20230920132426
+        image: olaoyefaith/ts-ui-dashboard:20231009184802
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
