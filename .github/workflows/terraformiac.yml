@@ -2,8 +2,7 @@ name: infrastructure as code deployment
 
 on:
   push:
-    branches: 
-      - '*'
+    branches: none
   pull_request:
     branches: none
   workflow_dispatch:
