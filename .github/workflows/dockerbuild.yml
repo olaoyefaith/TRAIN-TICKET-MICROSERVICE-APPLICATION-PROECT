@@ -2,7 +2,7 @@ name: build docker images Microservices
 
 on:
   push:
-    branches:  [ "build_test_ci" ]
+    branches: none # [ "build_test_ci" ]
 
   pull_request:
     branches: none # [ "main" ]
