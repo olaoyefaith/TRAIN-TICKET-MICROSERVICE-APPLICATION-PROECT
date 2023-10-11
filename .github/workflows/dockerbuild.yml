@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        module: [ts-admin-order-service]
+        module: [ts-admin-basic-info-service]
       fail-fast: false
       max-parallel: 3
 
