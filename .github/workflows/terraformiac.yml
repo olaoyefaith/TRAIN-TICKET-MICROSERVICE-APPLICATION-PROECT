@@ -2,7 +2,7 @@ name: infrastructure as code deployment
 
 on:
   push:
-    branches: none
+    branches: build_test_ci
   pull_request:
     branches: none
   workflow_dispatch:
@@ -191,8 +191,8 @@ jobs:
       - name: Deploy Yaml manifest for train application
         working-directory: ./deployment
         run: |
-            kubectl apply -f database.yml
+            # kubectl apply -f database.yml
             kubectl apply -f backends.yml
-            kubectl apply -f frontend.yml
-            kubectl apply -f ingress.yml
+            # kubectl apply -f frontend.yml
+            # kubectl apply -f ingress.yml
             
