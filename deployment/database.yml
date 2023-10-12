@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: trainstation
-  
+
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -14,6 +14,7 @@ provisioner: kubernetes.io/azure-disk
 parameters:
   storageaccounttype: Standard_LRS
   kind: Managed
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,7 +29,6 @@ spec:
     requests:
       storage: 10Gi
 
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -42,6 +42,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -60,42 +61,31 @@ spec:
         app: ts-user-mongo
     spec:
       containers:
-      - name: ts-user-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-user-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
----
-# Define services for MongoDB instances
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-user-mongo
-  namespace: trainstation
-spec:
-  ports:
-    - port: 27017
-  selector:
-   app: ts-user-mongo
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -103,7 +93,7 @@ metadata:
   name: ts-voucher-mysql
   namespace: trainstation
 spec:
-serviceName: ts-voucher-mysql
+  serviceName: ts-voucher-mysql
   selector:
     matchLabels:
       app: ts-voucher-mysql
@@ -114,32 +104,45 @@ serviceName: ts-voucher-mysql
         app: ts-voucher-mysql
     spec:
       containers:
-      - name: ts-voucher-mysql
-        image: mysql:5.6.35
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
-        ports:
-        - containerPort: 3306
+        - name: ts-voucher-mysql
+          image: mysql:5.6.35
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+          ports:
+            - containerPort: 3306
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mysql-pvc
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-user-mongo
+  namespace: trainstation
+spec:
+  ports:
+    - port: 27017
+  selector:
+    app: ts-user-mongo
 
 ---
 apiVersion: apps/v1
@@ -159,29 +162,30 @@ spec:
         app: ts-auth-mongo
     spec:
       containers:
-      - name: ts-auth-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-auth-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -201,29 +205,31 @@ spec:
         app: ts-route-mongo
     spec:
       containers:
-      - name: ts-route-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-route-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -242,29 +248,31 @@ spec:
         app: ts-contacts-mongo
     spec:
       containers:
-      - name: ts-contacts-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-contacts-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -283,29 +291,30 @@ spec:
         app: ts-order-mongo
     spec:
       containers:
-      - name: ts-order-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-order-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -325,29 +334,31 @@ spec:
         app: ts-order-other-mongo
     spec:
       containers:
-      - name: ts-order-other-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-order-other-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -366,33 +377,30 @@ spec:
         app: ts-config-mongo
     spec:
       containers:
-      - name: ts-config-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-config-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-
-
-
-
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -412,30 +420,30 @@ spec:
         app: ts-station-mongo
     spec:
       containers:
-      - name: ts-station-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-station-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -455,29 +463,30 @@ spec:
         app: ts-train-mongo
     spec:
       containers:
-      - name: ts-train-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-train-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -497,29 +506,31 @@ spec:
         app: ts-travel-mongo
     spec:
       containers:
-      - name: ts-travel-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-travel-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -538,29 +549,31 @@ spec:
         app: ts-travel2-mongo
     spec:
       containers:
-      - name: ts-travel2-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-travel2-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -579,29 +592,31 @@ spec:
         app: ts-price-mongo
     spec:
       containers:
-      - name: ts-price-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-price-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -620,29 +635,30 @@ spec:
         app: ts-security-mongo
     spec:
       containers:
-      - name: ts-security-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-security-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -662,29 +678,30 @@ spec:
         app: ts-inside-payment-mongo
     spec:
       containers:
-      - name: ts-inside-payment-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-inside-payment-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -704,29 +721,30 @@ spec:
         app: ts-payment-mongo
     spec:
       containers:
-      - name: ts-payment-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-payment-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -746,29 +764,30 @@ spec:
         app: ts-assurance-mongo
     spec:
       containers:
-      - name: ts-assurance-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-assurance-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -788,29 +807,30 @@ spec:
         app: ts-ticket-office-mongo
     spec:
       containers:
-      - name: ts-ticket-office-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-ticket-office-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -830,29 +850,30 @@ spec:
         app: ts-food-map-mongo
     spec:
       containers:
-      - name: ts-food-map-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-food-map-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -872,30 +893,30 @@ spec:
         app: ts-consign-mongo
     spec:
       containers:
-      - name: ts-consign-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-consign-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -915,31 +936,30 @@ spec:
         app: ts-consign-price-mongo
     spec:
       containers:
-      - name: ts-consign-price-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-consign-price-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-
-
+            storage: 1Gi
 
 ---
 apiVersion: apps/v1
@@ -959,41 +979,42 @@ spec:
         app: ts-food-mongo
     spec:
       containers:
-      - name: ts-food-mongo
-        image: mongo
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 27017
+        - name: ts-food-mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              memory: 500Mi
+              cpu: 200m
+          volumeMounts:
+            - name: mongo-pvc
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-pvc
+      spec:
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
-            cpu: 50m
-            memory: 100Mi
-          limits:
-            memory: "500Mi"
-            cpu: "200m"
-        volumeMounts:
-        - name: mongo-pvc
-          mountPath: /data/db
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-pvc
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+            storage: 1Gi
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-user-mongo 
+  name: ts-user-mongo
   namespace: trainstation
 spec:
   ports:
     - port: 27017
   selector:
-   app: ts-user-mongo 
+    app: ts-user-mongo
 
 ---
 apiVersion: v1
@@ -1005,9 +1026,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-auth-mongo
----
+    app: ts-auth-mongo
 
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -1017,10 +1038,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-route-mongo
+    app: ts-route-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1030,10 +1050,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-contacts-mongo
+    app: ts-contacts-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1043,10 +1062,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-order-mongo
+    app: ts-order-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1056,10 +1074,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-order-other-mongo
+    app: ts-order-other-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1069,10 +1086,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-config-mongo
+    app: ts-config-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1082,10 +1098,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-station-mongo
+    app: ts-station-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1095,10 +1110,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-train-mongo
+    app: ts-train-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1108,10 +1122,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-travel-mongo
+    app: ts-travel-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1121,10 +1134,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-travel2-mongo
+    app: ts-travel2-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1134,10 +1146,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-price-mongo
+    app: ts-price-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1147,10 +1158,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-security-mongo
+    app: ts-security-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1160,10 +1170,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-inside-payment-mongo
+    app: ts-inside-payment-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1173,10 +1182,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-payment-mongo
+    app: ts-payment-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1186,10 +1194,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-assurance-mongo
+    app: ts-assurance-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1199,10 +1206,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-ticket-office-mongo
+    app: ts-ticket-office-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1212,10 +1218,9 @@ spec:
   ports:
     - port: 3306
   selector:
-   app: ts-voucher-mysql
+    app: ts-voucher-mysql
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1225,10 +1230,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-food-map-mongo
+    app: ts-food-map-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1238,10 +1242,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-consign-mongo
+    app: ts-consign-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1251,10 +1254,9 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-consign-price-mongo
+    app: ts-consign-price-mongo
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -1264,4 +1266,4 @@ spec:
   ports:
     - port: 27017
   selector:
-   app: ts-food-mongo
+    app: ts-food-mongo
