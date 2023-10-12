@@ -1,6 +1,5 @@
 # TRAIN-TICKET-MICROSERVICE-APPLICATION-PROJECT
-<<<<<<< HEAD
-=======
+
 The Train Station Application is a comprehensive microservices-based application that has been meticulously crafted using a variety of programming languages, including Java, Go, Python, and Node.js. This project is designed to serve as a real-world demonstration of the critical role that DevOps plays in a production environment. Throughout the development of this application, core DevOps principles such as automation, infrastructure management etc.have been implemented to showcase their practical application and value.
 
 ## Technologies:
@@ -38,4 +37,3 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
 ## Overall Objective:
 
 The primary goal of the Train Station Application project is to provide a tangible representation of how DevOps practices can enhance the software development and deployment process. By emphasizing automation, infrastructure management through IaC and Kubernetes for container orchestration the project illustrates how DevOps practices can lead to greater efficiency, faster delivery, and higher quality software products in a real-world, production-based setting.
->>>>>>> b262e6b (readme.md)
