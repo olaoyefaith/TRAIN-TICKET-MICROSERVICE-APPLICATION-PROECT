@@ -16,16 +16,20 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
 5. **Kubernetes Deployment**: The Train Station Application is deployed using Kubernetes. Manifest files define the desired state of the application, enabling efficient container orchestration and management in a containerized environment.
 
 ## Tasks:
-1. Automate Build, Test and Deploy Application as Containers to Dockerhub
+1. Automate Build, Test and Deploy Application as Containers to Dockerhub.
+
  Directory: .github/workflows/dockerbuild.yml
 
-2. Write Terraform Configurations For deployment eg AKS, POSTGRES, SQL and Set Backend to AZURE
+2. Write Terraform Configurations For deployment eg AKS, POSTGRES, SQL and Set Backend to AZURE.
+
  Directory: infra/
 
-3. Automate Infrastructure Provisioning Using Github Actions While Ensuring Sensitive data Protection by Using Environment Variable
+3. Automate Infrastructure Provisioning Using Github Actions While Ensuring Sensitive data Protection by Using Environment Variable.
+
  Directory: .github/workflows/terraformiac.yml
 
-4. Write Manifest Files to deploy K8s including deployment,service,statefulset and ingress etc
+4. Write Manifest Files to deploy K8s including deployment,service,statefulset and ingress etc.
+
   Directory: deployment/
 
 
