@@ -23,7 +23,7 @@ jobs:
 
       - name: Set Date
         id: set_date
-        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
+        run:  echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '11'
+          java-version: '8'
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
