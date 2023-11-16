@@ -13,6 +13,3 @@ output "aks_identity" {
 }
 
 
-# output "pg_connection_string" {
-#   value = azurerm_postgresql_server.example_pg.connection_strings["psql"]
-# }
