@@ -86,9 +86,16 @@ Docker
 
 
 2. Write Terraform Configurations For deployment eg AKS and Set Backend to AZURE.
+
 The primary goal was to leverage Infrastructure as Code (IaC) principles to define the AKS infrastructure and store the Terraform state in an Azure Backend, ensuring a secure and collaborative approach to managing the infrastructure's lifecycle.
 
- 
+i. I implemented authentication using OpenID Connect (OIDC) within GitHub Actions and Utilized OIDC tokens to authenticate and authorize Terraform operations.
+ ![Alt text](images/oidc%20authentication.png)
+
+ii. The next step was to enable GitHub Actions to dynamically configure Azure Storage settings for Terraform backend.
+ ![Alt text](images/terraformstate.png)
+
+
  Directory: infra/
  ```
  resource "azurerm_kubernetes_cluster" "k8s" {
@@ -123,6 +130,16 @@ The primary goal was to leverage Infrastructure as Code (IaC) principles to defi
  ```
 
 3. Automate Infrastructure Provisioning Using Github Actions While Ensuring Sensitive data Protection by Using Environment Variable.
+
+i. Defined a deployment workflow in GitHub Actions to automate the execution of Terraform commands 
+![Alt text](images/terraformpipeline.png)
+
+ii. Orchestrated the deployment process, including initialization, planning, and applying changes.
+![Alt text](images/cdpipelinerun.png)
+
+![Alt text](images/aks%20provisioningterraform.png)
+
+code sample
 ```
   name: Build and deploy into AKS
     runs-on: ubuntu-latest
@@ -287,6 +304,17 @@ The primary goal was to leverage Infrastructure as Code (IaC) principles to defi
  Directory: .github/workflows/terraformiac.yml
 
 4. Write Manifest Files to deploy K8s including deployment,service,statefulset and ingress etc.
+
+![Alt text](images/kubernetespipeline.png)
+
+![Alt text](images/connectaks.png)
+
+![Alt text](images/akscluster.png)
+
+![Alt text](images/checkdeployment.png)
+
+
+
 ```
 ---
 apiVersion: v1
