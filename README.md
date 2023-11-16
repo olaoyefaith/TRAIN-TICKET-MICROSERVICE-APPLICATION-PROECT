@@ -18,16 +18,18 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
 
 ## Tasks:
 1. Automate Build, Test and Deploy Application as Containers to Dockerhub.
- i. I ensured that my codebase was well-managed using Git and hosted on GitHub, while setting the      enivornment variables for the pipeine run.
+i. I ensured that my codebase was well-managed using Git and hosted on GitHub, while setting the      enivornment variables for the pipeine run.
   ![Alt text](images/enviromentvariable.png)
-
- ii.Configuring the CI pipeline in GitHub Actions, I orchestrated the execution of build scripts and   the creation of Docker images automatically using dockerfile to containerise the applications. 
+  
+ii.Configuring the CI pipeline in GitHub Actions, I orchestrated the execution of build scripts and   the creation of Docker images automatically using dockerfile to containerise the applications. 
   ![Alt text](images/cipipelinerun.png)
+
   ![Alt text](images/dockerbuildresult.png)
 
- iii. For centralized container management, I leveraged DockerHub as my container registry, making it a repository for my Docker images.
+iii. For centralized container management, I leveraged DockerHub as my container registry, making it a repository for my Docker images.
   ![Alt text](images/dockerhub1.png)
  
+Code sample
 ```
  - name: Set up Java
         uses: actions/setup-java@v2
@@ -79,12 +81,14 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
          vuln-type: 'os,library'
          severity: 'MEDIUM,HIGH,CRITICAL'
 ```
-
-Docker 
+Docker
  Directory: .github/workflows/dockerbuild.yml
 
-2. Write Terraform Configurations For deployment eg AKS and Set Backend to AZURE.
 
+2. Write Terraform Configurations For deployment eg AKS and Set Backend to AZURE.
+The primary goal was to leverage Infrastructure as Code (IaC) principles to define the AKS infrastructure and store the Terraform state in an Azure Backend, ensuring a secure and collaborative approach to managing the infrastructure's lifecycle.
+
+ 
  Directory: infra/
  ```
  resource "azurerm_kubernetes_cluster" "k8s" {
@@ -159,8 +163,7 @@ Docker
           files: infra/terraform.tfvars
           replacements: |
             __AKS_RESOURCE_GROUP__=${{ env.AKS_RESOURCE_GROUP}},__AKS_NAME__=${{ env.AKS_NAME}},__CLIENT_ID__=${{ secrets.AZURE_CLIENT_ID }},__CLIENT_SECRET__= ${{ secrets.AZURE_CLIENT_SECRET }},__SUBSCRIPTION_ID__=${{ secrets.AZURE_SUBSCRIPTION_ID }} ,__TENANT_ID__=${{ secrets.AZURE_TENANT_ID }}
-            
-   # __ADMINISTRATOR_LOGIN__=${{ env.ADMINISTRATOR_LOGIN }},__ADMINISTRATOR_LOGIN_PASSWORD__=${{ env.ADMINISTRATOR_LOGIN_PASSWORD }}
+          
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
