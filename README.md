@@ -311,6 +311,7 @@ code sample
 
 ![Alt text](images/akscluster.png)
 
+
 ![Alt text](images/checkdeployment.png)
 
 
