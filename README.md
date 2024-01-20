@@ -19,7 +19,10 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
 ## Tasks:
 1. Automate Build, Test and Deploy Application as Containers to Dockerhub.
 i. I ensured that my codebase was well-managed using Git and hosted on GitHub, while setting the      enivornment variables for the pipeine run.
+
   ![Alt text](images/enviromentvariable.png)
+  ![Alt Text](images\enviromentvariable.png)
+
   
 ii.Configuring the CI pipeline in GitHub Actions, I orchestrated the execution of build scripts and   the creation of Docker images automatically using dockerfile to containerise the applications. 
   ![Alt text](images/cipipelinerun.png)
