@@ -25,10 +25,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_policy = "calico"
   }
 
-  # service_principal {
-  #   client_id     = var.aks_service_principal_client_id
-  #   client_secret = var.aks_service_principal_client_secret
-  # }
 
   tags = {
     Environment = "Development"
