@@ -18,6 +18,18 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
 
 ## Tasks:
 1. Automate Build, Test and Deploy Application as Containers to Dockerhub.
+i. I ensured that my codebase was well-managed using Git and hosted on GitHub, while setting the      enivornment variables for the pipeine run.
+  ![Alt text](images/enviromentvariable.png)
+  
+ii.Configuring the CI pipeline in GitHub Actions, I orchestrated the execution of build scripts and   the creation of Docker images automatically using dockerfile to containerise the applications. 
+  ![Alt text](images/cipipelinerun.png)
+
+  ![Alt text](images/dockerbuildresult.png)
+
+iii. For centralized container management, I leveraged DockerHub as my container registry, making it a repository for my Docker images.
+  ![Alt text](images/dockerhub1.png)
+ 
+Code sample
 ```
  - name: Set up Java
         uses: actions/setup-java@v2
@@ -69,10 +81,20 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
          vuln-type: 'os,library'
          severity: 'MEDIUM,HIGH,CRITICAL'
 ```
-
+Docker
  Directory: .github/workflows/dockerbuild.yml
 
-2. Write Terraform Configurations For deployment eg AKS, POSTGRES, SQL and Set Backend to AZURE.
+
+2. Write Terraform Configurations For deployment eg AKS and Set Backend to AZURE.
+
+The primary goal was to leverage Infrastructure as Code (IaC) principles to define the AKS infrastructure and store the Terraform state in an Azure Backend, ensuring a secure and collaborative approach to managing the infrastructure's lifecycle.
+
+i. I implemented authentication using OpenID Connect (OIDC) within GitHub Actions and Utilized OIDC tokens to authenticate and authorize Terraform operations.
+ ![Alt text](images/oidc%20authentication.png)
+
+ii. The next step was to enable GitHub Actions to dynamically configure Azure Storage settings for Terraform backend.
+ ![Alt text](images/terraformstate.png)
+
 
  Directory: infra/
  ```
@@ -108,6 +130,16 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
  ```
 
 3. Automate Infrastructure Provisioning Using Github Actions While Ensuring Sensitive data Protection by Using Environment Variable.
+
+i. Defined a deployment workflow in GitHub Actions to automate the execution of Terraform commands 
+![Alt text](images/terraformpipeline.png)
+
+ii. Orchestrated the deployment process, including initialization, planning, and applying changes.
+![Alt text](images/cdpipelinerun.png)
+
+![Alt text](images/aks%20provisioningterraform.png)
+
+code sample
 ```
   name: Build and deploy into AKS
     runs-on: ubuntu-latest
@@ -148,8 +180,7 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
           files: infra/terraform.tfvars
           replacements: |
             __AKS_RESOURCE_GROUP__=${{ env.AKS_RESOURCE_GROUP}},__AKS_NAME__=${{ env.AKS_NAME}},__CLIENT_ID__=${{ secrets.AZURE_CLIENT_ID }},__CLIENT_SECRET__= ${{ secrets.AZURE_CLIENT_SECRET }},__SUBSCRIPTION_ID__=${{ secrets.AZURE_SUBSCRIPTION_ID }} ,__TENANT_ID__=${{ secrets.AZURE_TENANT_ID }}
-            
-   # __ADMINISTRATOR_LOGIN__=${{ env.ADMINISTRATOR_LOGIN }},__ADMINISTRATOR_LOGIN_PASSWORD__=${{ env.ADMINISTRATOR_LOGIN_PASSWORD }}
+          
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -273,6 +304,18 @@ Terraform,Github Actions,Docker,Node.js,AZURE,AKS,MONGODB,MYSQL
  Directory: .github/workflows/terraformiac.yml
 
 4. Write Manifest Files to deploy K8s including deployment,service,statefulset and ingress etc.
+
+![Alt text](images/kubernetespipeline.png)
+
+![Alt text](images/connectaks.png)
+
+![Alt text](images/akscluster.png)
+
+
+![Alt text](images/checkdeployment.png)
+
+
+
 ```
 ---
 apiVersion: v1
